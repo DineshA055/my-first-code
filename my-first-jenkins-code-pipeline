@@ -1,14 +1,12 @@
-node {
-     def app 
-     stage('clone repository') {
-      checkout scm  
+pipeline {
+  agent {
+    docker { image 'node:16-alpine' }
+  }
+  stages {
+    stage('Test') {
+      steps {
+        sh 'node --version'
+      }
     }
-     stage('Build docker Image'){
-      app = docker.build("dockerdemo")
-    }
-     stage('Test Image'){
-       app.inside {
-         sh 'echo "TEST PASSED"' 
-      }  
-    }
+  }
 }
